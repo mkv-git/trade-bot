@@ -1,8 +1,7 @@
-from typing import Any
+from tbot.utils.classifiers import DictStrAny
 
-from tbot.utils.classifiers import TDictAny
 
-def get_bot_group_by_id(params: TDictAny) -> str:
+def get_bot_group_by_id() -> str:
     query = """
         SELECT
             bg.group_name, bg.uid, bg.exchange,
@@ -17,7 +16,7 @@ def get_bot_group_by_id(params: TDictAny) -> str:
     return query
 
 
-def get_bot_groups(params: TDictAny) -> str:
+def get_bot_groups(params: DictStrAny) -> str:
     query = """
         SELECT *
         FROM bot_groups
@@ -30,7 +29,7 @@ def get_bot_groups(params: TDictAny) -> str:
     return query
 
 
-def get_bot_group_config(params: TDictAny) -> str:
+def get_bot_group_config() -> str:
     query = """
         SELECT *
         FROM bot_group_config
@@ -40,7 +39,7 @@ def get_bot_group_config(params: TDictAny) -> str:
     return query
 
 
-def get_bot_group_secrets(params: TDictAny) -> str:
+def get_bot_group_secrets(params: DictStrAny) -> str:
     query = """
         SELECT *
         FROM bot_group_secrets

@@ -1,9 +1,7 @@
-from typing import Any
-
-from tbot.utils.classifiers import TDictAny
+from tbot.utils.classifiers import DictStrAny
 
 
-def get_positions(params: TDictAny) -> str:
+def get_positions(params: DictStrAny) -> str:
     query = """
         SELECT *
         FROM positions

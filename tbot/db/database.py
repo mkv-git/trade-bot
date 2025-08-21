@@ -1,12 +1,11 @@
 import os
-from typing import Type
 
 from loguru import logger
 from psycopg_pool import AsyncConnectionPool
 
 
 def get_url() -> str:
-    return "postgresql://%s:%s@%s:%s/%s" % (
+    return "postgresql://%s:%s@%s:%s/%s" % (  # pylint: disable=C0209
         os.getenv("CBOT_DB_USERNAME"),
         os.getenv("CBOT_DB_PASSWORD"),
         os.getenv("CBOT_DB_HOST"),
@@ -15,7 +14,7 @@ def get_url() -> str:
     )
 
 
-class DataBase:
+class DataBase:  # pylint: disable=R0903
     pool: AsyncConnectionPool | None = None
 
 

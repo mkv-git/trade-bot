@@ -1,12 +1,10 @@
-from decimal import Decimal
-
-from pydantic import BaseModel, RootModel, Field
+from pydantic import BaseModel, RootModel
 
 
-class QueryResponseData(BaseModel):
+class PositionsData(BaseModel):
     token: str
     restart: bool
     order_name: str
 
 
-GetPositionsResponse = RootModel[list[QueryResponseData]]
+GetPositionsResponse = RootModel[list[PositionsData]]

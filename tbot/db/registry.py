@@ -1,5 +1,4 @@
-from typing import Any
-
+from tbot.utils.classifiers import DictStrAny
 from tbot.db.queries.positions import get_positions
 from tbot.models.request.positions import GetPositionsRequest
 
@@ -17,7 +16,7 @@ from tbot.models.request.bot_groups import (
 )
 
 
-sql_registry: dict[str, Any] = {
+sql_registry: DictStrAny = {
     "get_positions": {
         "query_str": get_positions,
         "request_model": GetPositionsRequest,

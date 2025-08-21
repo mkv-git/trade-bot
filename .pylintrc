@@ -1,3 +1,5 @@
 [MASTER]
-disable = C0114,C0115,C0116  # missing-*-docstring
+disable = C0114,C0115,C0116,  # missing-*-docstring
+  W0718, # broad-exception-caught
+  C0305 # trailing-newlines
 extension-pkg-allow-list = orjson

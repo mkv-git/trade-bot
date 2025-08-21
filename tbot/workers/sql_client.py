@@ -11,7 +11,7 @@ from pydantic import ValidationError
 
 from tbot.db.database import get_database
 from tbot.db.registry import sql_registry
-from tbot.utils.classifiers import TDictAny
+from tbot.utils.classifiers import DictStrAny
 from tbot.workers.base import AbstractBaseWorker
 from tbot.utils.helpers import default_serializer, validate
 from tbot.config.const import SQL_WORKER_PORT, INPROC_BACKEND_ADDR
@@ -64,7 +64,10 @@ class SqlWorker(AbstractBaseWorker):
             else:
                 query_params = {}
 
-            query_str = reg_obj["query_str"](query_params)
+            if query_params:
+                query_str = reg_obj["query_str"](query_params)
+            else:
+                query_str = reg_obj["query_str"]()
             query_res = await self.make_db_request(query_str, query_params)
             return await self.handle_success(query_res)
         except KeyError:
@@ -85,7 +88,7 @@ class SqlWorker(AbstractBaseWorker):
             logger.exception(exc)
             return await self.handle_error(f"Unexpected {exc=} {type(exc)=}")
 
-    async def make_db_request(self, query_str: str, params: TDictAny | None) -> list[TDictAny]:
+    async def make_db_request(self, query_str: str, params: DictStrAny | None) -> list[DictStrAny]:
         logger.debug(query_str)
         logger.debug(params)
 

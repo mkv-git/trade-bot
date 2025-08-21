@@ -3,7 +3,7 @@ from typing import TypeVar, Any
 
 from pydantic import BaseModel
 
-type TDictAny = dict[str, Any]
+type DictStrAny = dict[str, Any]
 
 REQ = TypeVar("REQ", bound=BaseModel)
 RESP = TypeVar("RESP", bound=BaseModel)

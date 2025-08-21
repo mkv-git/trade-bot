@@ -2,8 +2,6 @@ import hmac
 from decimal import Decimal
 from typing import Any, Type
 
-from pydantic import ValidationError
-
 from tbot.utils.classifiers import MODEL
 
 

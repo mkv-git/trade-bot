@@ -29,6 +29,7 @@ def upgrade() -> None:
         sa.Column("group_name", sa.String(16), nullable=False, unique=True),
         sa.Column("uid", sa.Integer, nullable=False),
         sa.Column("exchange", sa.String(16), nullable=False),
+        sa.Column("comment", sa.String(64)),
     )
 
 

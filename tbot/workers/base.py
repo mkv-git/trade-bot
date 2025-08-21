@@ -14,7 +14,7 @@ from zmq.asyncio import Context, Socket, Poller
 from tbot.utils.helpers import validate
 from tbot.models.request.base import WSRequest
 from tbot.models.response.base import WSResponse
-from tbot.utils.classifiers import ResponseStatus, TDictAny
+from tbot.utils.classifiers import ResponseStatus, DictStrAny
 from tbot.config.const import (
     INPROC_BACKEND_ADDR,
     LOGGING_FILE_ROOT_DIR,
@@ -70,11 +70,11 @@ class AbstractBaseWorker(ABC, EnforceOverrides):
             sock_obj.identity = obj["identity"]
             x = sock_obj.connect(obj["connection"])
 
-    async def worker_query(self, payload: list[Any], sock_item: TDictAny) -> WSResponse | None:
+    async def worker_query(self, payload: list[Any], sock_item: DictStrAny) -> WSResponse | None:
         sock_obj = sock_item["obj"]
         if not sock_obj:
             logger.error("Socket not initialized")
-            return
+            return None
         sock_name = list(sock_item.keys())[0]
         await sock_obj.send_multipart(payload)
 
@@ -93,7 +93,7 @@ class AbstractBaseWorker(ABC, EnforceOverrides):
             if retries_left == 0:
                 logger.error(f"Worker({sock_name}) offline, abort!")
                 sock_item["obj"] = None
-                return
+                return None
 
             logger.info(f"Reconnecting to worker({sock_name})")
             sock_item["obj"] = sock_obj = self.context.socket(zmq.DEALER)
