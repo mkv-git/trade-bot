@@ -44,9 +44,9 @@ class PrivateWSWorker(AbstractBaseWorker):
             "private", demo=True, api_key=self._api_key, api_secret=self._api_secret
         )
 
-        await self._private_ws.subscribe("order", self._handle_messages)
-        await self._private_ws.subscribe("wallet", self._handle_messages)
-        await self._private_ws.subscribe("position", self._handle_messages)
+        await self._private_ws.subscribe("order", self._handle_other_streams)
+        await self._private_ws.subscribe("wallet", self._handle_wallet_stream)
+        await self._private_ws.subscribe("position", self._handle_other_streams)
 
         self.tasks.append(self.start_publisher())
         await asyncio.gather(*self.tasks)
@@ -91,7 +91,7 @@ class PrivateWSWorker(AbstractBaseWorker):
         topic = msg['topic']
         await self.stream_queue.put((topic, msg))
 
-    async def _handle_messages(self, msg: DictStrAny):
+    async def _handle_other_streams(self, msg: DictStrAny):
         topic = msg['topic']
         symbol = msg["data"][0]["symbol"]
         msg_filter = f"{topic}.{symbol}"
