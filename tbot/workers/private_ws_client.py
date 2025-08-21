@@ -40,9 +40,7 @@ class PrivateWSWorker(AbstractBaseWorker):
         await self._load_group_config()
         await self._load_group_secrets()
 
-        self._private_ws = PrivateWS(
-            "private", demo=True, api_key=self._api_key, api_secret=self._api_secret
-        )
+        self._private_ws = PrivateWS(demo=True, api_key=self._api_key, api_secret=self._api_secret)
 
         await self._private_ws.subscribe("order", self._handle_other_streams)
         await self._private_ws.subscribe("wallet", self._handle_wallet_stream)
@@ -88,11 +86,11 @@ class PrivateWSWorker(AbstractBaseWorker):
         self._api_secret = res_obj.root[0].api_secret
 
     async def _handle_wallet_stream(self, msg: DictStrAny):
-        topic = msg['topic']
+        topic = msg["topic"]
         await self.stream_queue.put((topic, msg))
 
     async def _handle_other_streams(self, msg: DictStrAny):
-        topic = msg['topic']
+        topic = msg["topic"]
         symbol = msg["data"][0]["symbol"]
         msg_filter = f"{topic}.{symbol}"
 
